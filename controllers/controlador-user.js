@@ -17,7 +17,7 @@ const createUser = async (req, res, next) => {
     error.code = 422;
     return next(error);
   }
-  const { userName, email, password } = req.body;
+  const { name, userName, email, password } = req.body;
   let existeUser;
   try {
     existeUser = await User.findOne({
@@ -43,12 +43,12 @@ const createUser = async (req, res, next) => {
         "There was some error. It was not possible to save the datas."
       );
       error.code = 500;
-      console.log(err);
       return next(error);
     }
     let hashedPassword;
     hashedPassword = await bcrypt.hash(password, 12);
     const nuevoUser = new User({
+      name: name,
       userName: userName,
       email: email,
       password: hashedPassword,
@@ -63,6 +63,7 @@ const createUser = async (req, res, next) => {
       });
       await sess.commitTransaction();
     } catch (err) {
+      console.log(err)
       const error = new Error("The data could not be saved.");
       error.code = 500;
       return next(error);
