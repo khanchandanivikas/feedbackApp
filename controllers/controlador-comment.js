@@ -84,7 +84,7 @@ const createComment = async (req, res, next) => {
   });
 };
 
-// recuperar comment por su id
+// recuperar comment por su idd
 const getCommentById = async (req, res, next) => {
   const idComment = req.params.id;
   let comment;
