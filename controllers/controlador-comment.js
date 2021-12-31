@@ -40,11 +40,13 @@ const createComment = async (req, res, next) => {
   const nuevoComment = new Comment({
     details: details,
     creator: creator,
-    feedback_ref: feedback_ref
+    feedback_ref: feedback_ref,
   });
   let feedbackRelacionado;
   try {
-    feedbackRelacionado = await Feedback.findById(feedback_ref).populate("comments");
+    feedbackRelacionado = await Feedback.findById(feedback_ref).populate(
+      "comments"
+    );
   } catch (error) {
     const err = new Error("Comment creation process failed.");
     err.code = 500;
@@ -74,7 +76,7 @@ const createComment = async (req, res, next) => {
     });
     await sess.commitTransaction();
   } catch (error) {
-      console.log(error)
+    console.log(error);
     const err = new Error("The data could not be saved.");
     err.code = 500;
     return next(err);
@@ -89,7 +91,10 @@ const getCommentById = async (req, res, next) => {
   const idComment = req.params.id;
   let comment;
   try {
-    comment = await Comment.findById(idComment);
+    comment = await Comment.findById(idComment).populate([
+      "feedback_ref",
+      "replies",
+    ]);
   } catch (err) {
     const error = new Error(
       "There was some error. It was not possible to recover the datas."
@@ -130,7 +135,9 @@ const deleteComment = async (req, res, next) => {
     return next(error);
   }
   if (comment.creator.toString() !== req.userData.userId) {
-    const error = new Error("You do not have permission to delete this comment.");
+    const error = new Error(
+      "You do not have permission to delete this comment."
+    );
     error.code = 401;
     return next(error);
   }
@@ -214,4 +221,3 @@ exports.createComment = createComment;
 exports.getCommentById = getCommentById;
 exports.deleteComment = deleteComment;
 exports.modifyComment = modifyComment;
-
