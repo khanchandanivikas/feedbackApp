@@ -120,6 +120,7 @@ const getCommentsByFeedbackId = async (req, res, next) => {
   let comments;
   try {
     comments = await Comment.find({feedback_ref: { $eq: idFeedback } }).populate([
+      "creator",
       "feedback_ref",
       "replies",
     ]);
