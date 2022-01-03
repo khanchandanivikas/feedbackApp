@@ -114,6 +114,34 @@ const getCommentById = async (req, res, next) => {
   });
 };
 
+// get comments for feedback by id feedback
+const getCommentsByFeedbackId = async (req, res, next) => {
+  const idFeedback = req.params.fid;
+  let comments;
+  try {
+    comments = await Comment.find({feedback_ref: { $eq: idFeedback } }).populate([
+      "feedback_ref",
+      "replies",
+    ]);
+  } catch (err) {
+    const error = new Error(
+      "There was some error. It was not possible to recover the datas."
+    );
+    error.code = 500;
+    return next(error);
+  }
+  if (!comments) {
+    const error = new Error(
+      "It was not possible to recover comments with the given id"
+    );
+    error.code = 404;
+    return next(error);
+  }
+  res.json({
+    comments: comments,
+  });
+};
+
 // eliminar comment por id
 const deleteComment = async (req, res, next) => {
   const idcomment = req.params.id;
@@ -219,5 +247,6 @@ const modifyComment = async (req, res, next) => {
 exports.getAllComments = getAllComments;
 exports.createComment = createComment;
 exports.getCommentById = getCommentById;
+exports.getCommentsByFeedbackId = getCommentsByFeedbackId;
 exports.deleteComment = deleteComment;
 exports.modifyComment = modifyComment;

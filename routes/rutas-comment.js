@@ -10,6 +10,9 @@ router.get("/", controladorComment.getAllComments);
 // consulta por id
 router.get("/:id", controladorComment.getCommentById);
 
+// get comments for feedback by id feedback
+router.get("/feedbackId/:fid", controladorComment.getCommentsByFeedbackId);
+
 // crear nuevo comment
 router.post(
   "/",
