@@ -37,9 +37,10 @@ const createReply = async (req, res, next) => {
     error.code = 422;
     return next(error);
   }
-  const { details, creator, comment_ref } = req.body;
+  const { details, creator, comment_ref, inResponseToUser } = req.body;
   const nuevoReply = new Reply({
     details: details,
+    inResponseToUser: inResponseToUser,
     creator: creator,
     comment_ref: comment_ref
   });
