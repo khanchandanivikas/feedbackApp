@@ -34,8 +34,6 @@ router.patch("/increment/:fid/:uid", controladorFeedback.incrementFeedback);
 // decrement votes feedback por su id y push idUser
 router.patch("/decrement/:fid/:uid", controladorFeedback.decrementFeedback);
 
-router.use(checkAuth);
-
 // modificar feedback por su id
 router.patch(
   "/:id",
@@ -47,6 +45,8 @@ router.patch(
   ],
   controladorFeedback.modifyFeedback
 );
+
+router.use(checkAuth);
 
 // eliminar feedback por id
 router.delete("/:id", controladorFeedback.deleteFeedback);

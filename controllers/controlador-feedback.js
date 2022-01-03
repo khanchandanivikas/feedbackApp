@@ -330,13 +330,13 @@ const modifyFeedback = async (req, res, next) => {
     error.code = 404;
     return next(error);
   }
-  if (feedback.creator.toString() !== req.userData.userId) {
-    const err = new Error(
-      "You do not have permission to modify this feedback."
-    );
-    err.code = 401;
-    return next(err);
-  }
+  // if (feedback.creator.toString() !== req.userData.userId) {
+  //   const err = new Error(
+  //     "You do not have permission to modify this feedback."
+  //   );
+  //   err.code = 401;
+  //   return next(err);
+  // }
   feedback.title = title;
   feedback.category = category;
   feedback.details = details;
