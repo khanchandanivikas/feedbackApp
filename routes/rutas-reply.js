@@ -17,6 +17,9 @@ router.post(
     check("details").not().isEmpty(),
     check("inResponseToUser").not().isEmpty(),
     check("creator").not().isEmpty(),
+    check("creatorName").not().isEmpty(),
+    check("creatorUserName").not().isEmpty(),
+    check("creatorAvatar").not().isEmpty(),
     check("comment_ref").not().isEmpty()
   ],
   controladorReply.createReply

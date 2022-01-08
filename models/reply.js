@@ -16,6 +16,18 @@ const replySchema = new Schema({
     required: true,
     ref: "User",
   },
+  creatorName: {
+    type: String,
+    required: true
+  },
+  creatorUserName: {
+    type: String,
+    required: true
+  },
+  creatorAvatar: {
+    type: String,
+    required: true
+  },
   comment_ref: {
     type: mongoose.Types.ObjectId,
     required: true,

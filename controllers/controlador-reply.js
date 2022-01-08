@@ -37,16 +37,29 @@ const createReply = async (req, res, next) => {
     error.code = 422;
     return next(error);
   }
-  const { details, creator, comment_ref, inResponseToUser } = req.body;
+  const {
+    details,
+    creator,
+    comment_ref,
+    creatorName,
+    creatorUserName,
+    creatorAvatar,
+    inResponseToUser,
+  } = req.body;
   const nuevoReply = new Reply({
     details: details,
     inResponseToUser: inResponseToUser,
     creator: creator,
-    comment_ref: comment_ref
+    creatorName: creatorName,
+    creatorUserName: creatorUserName,
+    creatorAvatar: creatorAvatar,
+    comment_ref: comment_ref,
   });
   let commentRelacionado;
   try {
-    commentRelacionado = await Comment.findById(comment_ref).populate("replies");
+    commentRelacionado = await Comment.findById(comment_ref).populate(
+      "replies"
+    );
   } catch (error) {
     const err = new Error("Reply creation process failed.");
     err.code = 500;
@@ -76,7 +89,7 @@ const createReply = async (req, res, next) => {
     });
     await sess.commitTransaction();
   } catch (error) {
-      console.log(error)
+    console.log(error);
     const err = new Error("The data could not be saved.");
     err.code = 500;
     return next(err);
@@ -216,4 +229,3 @@ exports.createReply = createReply;
 exports.getReplyById = getReplyById;
 exports.deleteReply = deleteReply;
 exports.modifyReply = modifyReply;
-
