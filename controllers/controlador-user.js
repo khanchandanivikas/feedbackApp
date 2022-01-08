@@ -87,6 +87,7 @@ const createUser = async (req, res, next) => {
     }
     res.status(201).json({
       userId: nuevoUser.id,
+      name: nuevoUser.name,
       userName: nuevoUser.userName,
       email: nuevoUser.email,
       password: nuevoUser.password,
@@ -174,6 +175,7 @@ const loginUser = async (req, res, next) => {
   }
   res.json({
     userId: usuarioExiste.id,
+    name: usuarioExiste.name,
     userName: usuarioExiste.userName,
     email: usuarioExiste.email,
     avatar: usuarioExiste.avatar,
