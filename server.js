@@ -14,14 +14,20 @@ app.use("/api/feedback", rutasFeedback);
 app.use("/api/comment", rutasComment);
 app.use("/api/reply", rutasReply);
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  next();
-});
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested, Content-Type, Accept Authorization"
+    )
+    if (req.method === "OPTIONS") {
+      res.header(
+        "Access-Control-Allow-Methods",
+        "POST, PUT, PATCH, GET, DELETE"
+      )
+      return res.status(200).json({})
+    }
+    next()
+  })
 app.use((error, req, res, next) => {
   if (res.headersSent) {
     return next(error);
