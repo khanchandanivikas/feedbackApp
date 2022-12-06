@@ -13,7 +13,15 @@ app.use("/api/user", rutasUser);
 app.use("/api/feedback", rutasFeedback);
 app.use("/api/comment", rutasComment);
 app.use("/api/reply", rutasReply);
-app.use( cors({ origin: "*" }) )
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
 app.use((error, req, res, next) => {
   if (res.headersSent) {
     return next(error);
