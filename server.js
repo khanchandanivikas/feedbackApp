@@ -33,7 +33,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGO_DB_URI)
+  .connect("mongodb+srv://vikas:dellmini@cluster0.2p3f6.mongodb.net/feedbackApp?retryWrites=true&w=majority")
   .then(() => {
     app.listen(process.env.PORT, () => {
       console.log("escuchando...");
