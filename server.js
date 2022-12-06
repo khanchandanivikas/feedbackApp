@@ -33,7 +33,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGO_DB_URL)
+  .connect(process.env.MONGO_DB_URI)
   .then(() => {
     app.listen(process.env.PORT, () => {
       console.log("escuchando...");
